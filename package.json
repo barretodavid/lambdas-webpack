@@ -1,0 +1,35 @@
+{
+  "name": "lambdas-webpack",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "jest",
+    "bundle": "webpack",
+    "zip:lambda-a": "cd dist/lambda-a && zip index.zip index.js",
+    "zip:lambda-b": "cd dist/lambda-b && zip index.zip index.js",
+    "zip:all": "npm run zip:lambda-a && npm run zip:lambda-b",
+    "update:lambda-a": "aws lambda update-function-code --function-name lambda-a --zip-file fileb://dist/lambda-a/index.zip --no-cli-pager",
+    "update:lambda-b": "aws lambda update-function-code --function-name lambda-b --zip-file fileb://dist/lambda-b/index.zip --no-cli-pager",
+    "update:all": "npm run update:lambda-a && npm run update:lambda-b",
+    "deploy:lambda-a": "npm run bundle && npm run zip:lambda-a && npm run update:lambda-a",
+    "deploy:lambda-b": "npm run bundle && npm run zip:lambda-b && npm run update:lambda-b",
+    "deploy:all": "npm run bundle && npm run zip:all && npm run update:all"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.84",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.11.6",
+    "@types/ramda": "^0.27.46",
+    "clean-webpack-plugin": "^4.0.0",
+    "jest": "^27.3.1",
+    "prettier": "^2.4.1",
+    "ts-jest": "^27.0.7",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.4.4",
+    "webpack": "^5.60.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "ramda": "^0.27.1"
+  }
+}
