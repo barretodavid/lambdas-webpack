@@ -1,6 +1,5 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const { IgnorePlugin } = require("webpack");
 
 module.exports = {
   entry: {
@@ -28,10 +27,5 @@ module.exports = {
     extensions: [".ts", ".js", ".json"],
   },
   mode: "production",
-  plugins: [
-    new CleanWebpackPlugin(),
-    new IgnorePlugin({
-      resourceRegExp: /^electron$/,
-    }),
-  ],
+  plugins: [new CleanWebpackPlugin()],
 };

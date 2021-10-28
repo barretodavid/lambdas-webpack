@@ -1,18 +1,15 @@
 {
   "name": "lambdas-webpack",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "test": "jest",
     "bundle": "webpack",
-    "zip:lambda-a": "cd dist/lambda-a && zip index.zip index.js",
-    "zip:lambda-b": "cd dist/lambda-b && zip index.zip index.js",
-    "zip:all": "npm run zip:lambda-a && npm run zip:lambda-b",
-    "update:lambda-a": "aws lambda update-function-code --function-name lambda-a --zip-file fileb://dist/lambda-a/index.zip --no-cli-pager",
-    "update:lambda-b": "aws lambda update-function-code --function-name lambda-b --zip-file fileb://dist/lambda-b/index.zip --no-cli-pager",
-    "update:all": "npm run update:lambda-a && npm run update:lambda-b",
-    "deploy:lambda-a": "npm run bundle && npm run zip:lambda-a && npm run update:lambda-a",
-    "deploy:lambda-b": "npm run bundle && npm run zip:lambda-b && npm run update:lambda-b",
+    "zip:lambda": "cd dist/${LAMBDA} && zip index.zip index.js",
+    "zip:all": "LAMBDA=lambda-a npm run zip:lambda && LAMBDA=lambda-b npm run zip:lambda",
+    "update:lambda": "aws lambda update-function-code --function-name ${LAMBDA} --zip-file fileb://dist/${LAMBDA}/index.zip --no-cli-pager",
+    "update:all": "LAMBDA=lambda-a npm run update:lambda && LAMBDA=lambda-b npm run update:lambda",
+    "deploy:lambda": "npm run bundle && npm run zip:lambda && npm run update:lambda",
     "deploy:all": "npm run bundle && npm run zip:all && npm run update:all"
   },
   "devDependencies": {
